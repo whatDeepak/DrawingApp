@@ -7,10 +7,12 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 
 class MainActivity : AppCompatActivity() {
 
     private var drawingView: DrawingView? = null
+    private var mImageButtonCurrentPaint: ImageButton? = null // A variable for current color is picked from color pallet.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,31 +31,7 @@ class MainActivity : AppCompatActivity() {
         ibBrush.setOnClickListener {
             showBrushSizeChooserDialog()
         }
-        val ibGallery: ImageButton = findViewById(R.id.ib_gallery)
-        ibGallery.setOnClickListener {
-            requestStoragePermission()
-        }
-        val ibUndo: ImageButton = findViewById(R.id.ib_undo)
-        ibUndo.setOnClickListener {
-            // This is for undo recent stroke.
-            drawingView?.onClickUndo()
-        }
-        //reference the save button from the layout
-        val ibSave:ImageButton = findViewById(R.id.ib_save)
-        //set onclick listener
-        ibSave.setOnClickListener{
-            //check if permission is allowed
-            if (isReadStorageAllowed()){
-                showProgressDialog()
-                //launch a coroutine block
-                lifecycleScope.launch{
-                    //reference the frame layout
-                    val flDrawingView:FrameLayout = findViewById(R.id.fl_drawing_view_container)
-                    //Save the image to the device
-                    saveBitmapFile(getBitmapFromView(flDrawingView))
-                }
-            }
-        }
+
     }
 
 
@@ -81,5 +59,33 @@ class MainActivity : AppCompatActivity() {
             brushDialog.dismiss()
         })
         brushDialog.show()
+    }
+
+    /**
+     * Method is called when color is clicked from pallet_normal.
+     *
+     * @param view ImageButton on which click took place.
+     */
+    fun paintClicked(view: View) {
+        if (view !== mImageButtonCurrentPaint) {
+            // Update the color
+            val imageButton = view as ImageButton  //view is the thing we are clicking on
+            // Here the tag is used for swaping the current color with previous color.
+            // The tag stores the selected view
+            val colorTag = imageButton.tag.toString()
+            // The color is set as per the selected tag here.
+            drawingView?.setColor(colorTag)
+            // Swap the backgrounds for last active and currently active image button.
+            imageButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.pallet_pressed))
+            mImageButtonCurrentPaint?.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.pallet_normal
+                )
+            )
+
+            //Current view is updated with selected view in the form of ImageButton.
+            mImageButtonCurrentPaint = view
+        }
     }
 }
