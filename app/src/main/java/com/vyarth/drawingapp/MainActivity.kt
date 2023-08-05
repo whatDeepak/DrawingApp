@@ -93,6 +93,7 @@ class MainActivity : AppCompatActivity() {
 
         val ibGallery: ImageButton = findViewById(R.id.ib_gallery)
         ibGallery.setOnClickListener {
+            // Request storage permission when the gallery button is clicked
             requestStoragePermission()
         }
 
@@ -202,16 +203,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     //create a method to requestStorage permission
-    private fun requestStoragePermission(){
-            // You can directly ask for the permission.
-            //if it has not been denied then request for permission
-            //  The registered ActivityResultCallback gets the result of this request.
+    private fun requestStoragePermission() {
+        if (isReadStorageAllowed()) {
+            // If permission is already granted, launch the gallery directly
+            openGallery()
+        } else {
+            // If permission is not granted, request it using ActivityResultLauncher
             requestPermission.launch(
                 arrayOf(
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
             )
+        }
+    }
+
+    private fun openGallery() {
+        val pickIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        openGalleryLauncher.launch(pickIntent)
     }
 
     /**  create rationale dialog

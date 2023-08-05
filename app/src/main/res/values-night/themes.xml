@@ -3,5 +3,7 @@
     <style name="Base.Theme.DrawingApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="android:statusBarColor">#000000</item>
     </style>
 </resources>
