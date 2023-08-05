@@ -154,6 +154,15 @@
             android:visibility="visible" />
 
         <ImageButton
+            android:id="@+id/ib_redo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="image"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_redo"
+            android:visibility="visible" />
+
+        <ImageButton
             android:id="@+id/ib_brush"
             android:layout_width="50dp"
             android:layout_height="50dp"
