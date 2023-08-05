@@ -179,7 +179,6 @@ class DrawingView(context: Context, attrs:AttributeSet) : View(context,attrs){
             invalidate() // Invalidate the whole view. If the view is visible
         }
     }
-
     fun onClickRedo() {
         if (mUndoPaths.size > 0) {
 
@@ -187,8 +186,6 @@ class DrawingView(context: Context, attrs:AttributeSet) : View(context,attrs){
             invalidate() // Invalidate the whole view. If the view is visible
         }
     }
-
-
 
     internal inner class CustomPath(var color:Int,var brushThickness:Float):Path()
 }

@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
 
     var customProgressDialog: Dialog? = null
 
-
     val openGalleryLauncher:ActivityResultLauncher<Intent> = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
         if (result.resultCode == RESULT_OK && result.data != null){
             val imageBackground:ImageView = findViewById(R.id.iv_background)
@@ -70,10 +69,7 @@ class MainActivity : AppCompatActivity() {
                         ).show()
                 }
             }
-
         }
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,10 +123,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-
     }
-
 
     /**
      * Method is used to launch the dialog to select different brush sizes.
@@ -180,7 +173,6 @@ class MainActivity : AppCompatActivity() {
                     R.drawable.pallet_normal
                 )
             )
-
             //Current view is updated with selected view in the form of ImageButton.
             mImageButtonCurrentPaint = view
         }
@@ -208,7 +200,6 @@ class MainActivity : AppCompatActivity() {
         //If permission is granted returning true and If permission is not granted returning false
         return result == PackageManager.PERMISSION_GRANTED
     }
-
 
     //create a method to requestStorage permission
     private fun requestStoragePermission(){
